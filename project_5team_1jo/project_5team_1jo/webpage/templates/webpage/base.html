@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Webpage{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'webpage/css/bootstrap.min.css' %}">
+    <style>
+        .wrap_content {
+            margin-top: 20px;
+        }
+        body {
+            margin: 0px;
+            background-color: #F0EDCC;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/webpage/">My Webpage app</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {% if title == 'home' %} active aria-current='page' {% endif %}"  href="{% url 'webpage:home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if title == 'search' %} active aria-current='page' {% endif %}" href="{% url 'webpage:search' %}">Search</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </ul>
+                <form class="form-inline justify-content-center" style="text-align: center;">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search for" aria-label="Search">
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="wrap_content">
+        <div id="content" name="content" class="container">
+        {% block content %}
+        {% endblock %}
+        </div>
+    </div>
+    <script src="{% static 'webpage/js/bootstrap.js' %}"></script>
+</body>
+</html>
