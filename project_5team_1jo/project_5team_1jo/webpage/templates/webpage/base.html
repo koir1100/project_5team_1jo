@@ -31,6 +31,13 @@
                         <a class="nav-link {% if request.path == '/webpage/detail/' %} active aria-current='page' {% endif %}" href="{% url 'webpage:detail' %}">Detail</a>
                     </li>
                 </ul>
+                <div class="float-end me-3">
+                    {% if request.user.is_authenticated %}
+                    <a onclick="logout_popup(event)" href="{% url 'webpage:signout' %}" class="btn btn-outline-light">{{ request.user.get_username }}, Hello!</a>
+                    {% else %}
+                    <a href="{% url 'webpage:signin' %}" class="btn btn-outline-light">Sign in</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </nav>
@@ -42,6 +49,15 @@
     </div>
     <script src="{% static 'webpage/js/bootstrap.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        function logout_popup(e) {
+            if (confirm("로그아웃 하시겠습니까?")) {
+                window.location.reload()
+            } else {
+                e.preventDefault()
+            }
+        }
+    </script>
     {% block script %}
     {% endblock %}
 </body>
