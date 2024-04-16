@@ -3,6 +3,12 @@ from django.http import HttpResponse
 from .models import *
 
 def index(request):
-    book_list = RecomBooks.objects.order_by('-recom_no')[:10]
-    output = ', '.join(b.recom_title for b in book_list)
-    return HttpResponse(output)
+    book_list = RecomBooks.objects.order_by('-recomno')[:10]
+    context = {'books': book_list}
+    return render(request, 'books/index.html')
+    #output = ', '.join(b.title for b in book_list)
+    #return HttpResponse(output)
+
+def detail(request, recombooks_id):
+    book = RecomBooks.objects.get(pk = recombooks_id)
+    #return HttpResponse

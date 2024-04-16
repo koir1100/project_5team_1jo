@@ -1,54 +1,7 @@
-import requests
-from bs4 import BeautifulSoup as BS
-import re
-from collections import Counter
-#from books import models
-
-#인증 키: d4e7415a231c75a620dd4615a4508a1902692938b60cb4c8b30eb6c8a07a3bc1
-rest = requests.get("https://nl.go.kr/NL/search/openApi/saseoApi.do?key=d4e7415a231c75a620dd4615a4508a1902692938b60cb4c8b30eb6c8a07a3bc1&startRowNumApi=1&endRowNumApi=10&start_date=20240315&end_date=20240415")
-
-"""
-요청 변수(request parameter)
-NO  요청변수        형식                설명
-1	key	            String(필수)    발급키
-2	startRowNumApi	integer         시작번호(1부터시작)
-3	endRowNemApi	integer	        종료번호
-4	start_date	    integer	        검색시작일
-5	end_date	    integer	        검색종료일
-6	drCode	        integer	        분류번호(11:문학, 6:인문과학, 5:사회과학, 4:자연과학)
-"""
-
-soup = BS(rest.text, 'html.parser')
-
-bookname = soup.find_all("recomtitle")
-authors = soup.find_all("recomauthor")
-isbn = soup.find_all("recomisbn")
-contents = soup.find_all("recomcontens")
-recom_no = soup.find_all("recomno")
-drcode = soup.find_all("drcode")
-pub = soup.find_all("recompublisher")
-
-data = []
-
-for i in range(len(bookname)):
-    contentsoup = BS(contents[i].text).text
-
-    contentsoup = contentsoup.replace("\xa0", " ")
-    contentsoup = contentsoup.replace("\n", " ")
-    print(len(contentsoup))
-    data_dict = {
-        "id":i,
-        "title":bookname[i].text,
-        "author":authors[i].text,
-        "isbn":isbn[i].text,
-        "recomment":contentsoup,
-        "recomno":recom_no[i].text,
-        "drcode":drcode[i].text
-    }
-    data.append(data_dict)
-
-print(data)
-
+from books.models import RecomBooks
+from books_api.serializers import RecomBooksSerializer
+from rest_framework.renderers import JSONRenderer
+import json
 
 sample = {
     'id': 7, 
@@ -60,3 +13,14 @@ sample = {
     'drcode': '5',
     'publisher':""
     }
+
+serializer= RecomBooksSerializer(sample)
+print(serializer.data)
+json_str = JSONRenderer().render(serializer.data)
+print(json_str)
+
+data = json.loads(json_str)
+serializer = RecomBooksSerializer(data=data)
+print(serializer.is_valid())
+
+new_data = serializer.save()
