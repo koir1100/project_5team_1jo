@@ -1,0 +1,72 @@
+{% extends 'webpage/base.html' %}
+{% block title %}Search page{% endblock %}
+{% block content %}
+<style>
+	.card {
+		padding: 10px;
+	}
+	.card h3 {
+		font-family: none;
+	}
+</style>
+<h2>검색 결과</h2>
+<form class="row row-cols-auto justify-content-center">
+	<div class="col-4">
+		<input class="form-control" type="text" placeholder="찾고자 하는 키워드를 입력하세요" />
+	</div>
+
+	<div class="col-1">
+		<button type="submit" class="btn btn-secondary">검색</button>
+	</div>
+</form>
+<hr />
+
+<div class="d-block">
+	<table id="book-table" class="table table-bordered border-dark table-hover">
+		<thead>
+			<tr>
+				<th scope="col">순서</th>
+				<th scope="col">책 제목</th>
+				<th scope="col">지은이</th>
+				<th scope="col">추천 키워드</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for row in result %}
+			<tr role="button" data-href="https://www.nl.go.kr/NL/contents/N20500000000.do?schM=view&recomNo={{row.recomNo}}">
+				<th class="text-center" scope="row">{{ row.id }}</th>
+				<td>{{ row.title }}</td>
+				<td>{{ row.author }}</td>
+				<td>{{ row.keywords|join:", " }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<hr/>
+
+	<div>
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+				<li class="page-item disabled">
+					<a class="page-link">Previous</a>
+				</li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item">
+					<a class="page-link" href="#">Next</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>
+{% endblock %}
+{% block script %}
+	<script>
+		$( document ).ready(function() {
+			$("#book-table").on("click", "tr[role=\"button\"]", function (e) {
+				window.open($(this).data("href"), '_blank');
+			});
+		});
+	</script>
+{% endblock %}

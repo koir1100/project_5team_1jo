@@ -8,21 +8,33 @@
 		font-family: none;
 	}
 </style>
-<h2>Index Page</h2>
-<div style="display:flex;">
-	<div class="card" style="width:33%;">
-		<h3>First</h3>
-		Suspendisse ut volutpat metus. In eu odio mollis, venenatis odio in, lacinia ipsum. Ut a orci nisi. Vivamus sit amet sem ac ipsum tincidunt posuere semper ac enim. Nullam et tempus nulla, non dapibus felis. Donec in augue sed justo egestas consectetur et et sem. Aliquam a erat malesuada, facilisis ligula vel, tempor nunc. Etiam eros turpis, finibus eu lobortis porta, finibus non turpis. Duis sit amet faucibus nisl, in dapibus tortor. Vivamus dapibus tristique convallis. In vitae dignissim justo. Proin accumsan sed velit vel posuere. Proin tristique velit enim, vel ornare ante egestas non.
-	</div>
+<h2>국립중앙도서관 사서추천도서 검색기</h2>
+<hr />
 
-	<div class="card" style="width:33%;">
-		<h3>Second</h3>
-		In hac habitasse platea dictumst. Nulla mauris nibh, tincidunt non elit quis, consequat sagittis lacus. Vivamus sagittis augue eget nibh volutpat, a tempus nunc commodo. In tincidunt sagittis enim non finibus. Proin sodales pulvinar lacinia. Phasellus tempus, mauris non congue hendrerit, mauris lorem rhoncus dolor, ac commodo sapien mi vitae magna. Sed ut velit sed magna convallis dapibus ut vitae nulla. Sed nisl quam, facilisis quis luctus sed, eleifend quis magna. Nunc vehicula neque eros, ut porttitor sem consectetur convallis. Sed orci nulla, finibus sit amet elit tristique, pulvinar tincidunt lorem. Nullam auctor in magna ac tristique. In hac habitasse platea dictumst. Aliquam ac tellus imperdiet, vulputate purus in, gravida neque. Vivamus id aliquam odio, ac ornare mi.
-	</div>
-
-	<div class="card" style="width:33%;">
-		<h3>Third</h3>
-		In luctus leo quis dictum pellentesque. Integer sed eros nunc. Nulla at scelerisque lectus. Nulla at erat turpis. Morbi sit amet libero et erat malesuada suscipit. Quisque vel molestie diam. Fusce tempor viverra arcu, eget viverra metus pretium aliquet. Aenean rhoncus, diam nec ornare laoreet, lorem erat scelerisque tellus, vitae placerat urna arcu quis nunc. Nunc at neque eleifend, porttitor sapien vel, interdum sem. Aenean bibendum sodales est eget ullamcorper. Aenean quis egestas turpis.
-	</div>
+<h3>카테고리별 목록</h3>
+<div class="row">
+	<ul class="nav col justify-content-center">
+		<li class="nav-item"><a class="nav-link" href="#">전체</a></li>
+		<li class="nav-item"><a class="nav-link" href="#">문학</a></li>
+		<li class="nav-item"><a class="nav-link" href="#">인문사회</a></li>
+		<li class="nav-item"><a class="nav-link" href="#">사회과학</a></li>
+		<li class="nav-item"><a class="nav-link" href="#">자연과학</a></li>
+	</ul>
 </div>
+<hr />
+
+<h3>검색</h3>
+<form class="row row-cols-auto justify-content-center">
+	<div class="col-4">
+		<input class="form-control" type="text" placeholder="찾고자 하는 키워드를 입력하세요" />
+	</div>
+
+	<div class="col-1">
+		<button type="submit" class="btn btn-secondary">검색</button>
+	</div>
+</form>
+
+<p class="float-end">
+	<button type="button" class="btn btn-outline-success">키워드 Top 10 바로가기</button>
+</p>
 {% endblock %}
