@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'webpage.apps.WebpageConfig',
+    'webpage.templatetags.webpage_extra',
     'library_api.apps.LibraryApiConfig',
     'rest_framework',
 ]

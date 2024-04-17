@@ -1,6 +1,12 @@
 {% extends 'webpage/base.html' %}
+{% load webpage_extra %}
 {% block title %}Book list{% endblock %}
 {% block content %}
+<style>
+	.line-breaks {
+		white-space: pre;
+	}
+</style>
 <h2>{{ category }} 검색 결과</h2>
 <form class="row row-cols-auto justify-content-center">
 	<div class="col-4">
@@ -18,6 +24,7 @@
 		<thead class="align-middle text-center">
 			<tr>
 				<th scope="col" style="width: 5%;">순서</th>
+				<th scope="col" style="width: 5%;">분야</th>
 				<th class="col-5" scope="col">책 제목</th>
 				<th class="col-4" scope="col">지은이</th>
 				<th class="col-2" scope="col">추천 키워드</th>
@@ -27,6 +34,7 @@
 			{% for row in result %}
 			<tr role="button" data-href="https://www.nl.go.kr/NL/contents/N20500000000.do?schM=view&recomNo={{row.recomNo}}">
 				<th class="text-center" scope="row">{{ forloop.revcounter }}</th>
+				<td class="text-center line-breaks">{% replace_category_name row.drCode %}</td>
 				<td>{{ row.recomtitle }}</td>
 				<td>{{ row.recomauthor }}</td>
 				<td>{{ row.keywords|join:", " }}</td>
