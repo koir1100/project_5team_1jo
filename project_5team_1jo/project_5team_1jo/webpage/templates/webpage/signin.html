@@ -36,10 +36,18 @@
                     {% if forloop.first %}
                     <br/>
                     {% endif %}
+                    {% if message.tags == 'success' %}
+                    <div class="alert alert-success alert-dismissible fade show">
+                        <em>{{ message }}</em>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+                    {% if message.tags == 'error' %}
                     <div class="alert alert-danger alert-dismissible fade show">
                         {{ message }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
+                    {% endif %}
                 {% endfor %}
                 <br/>
                 <div class="auth__actions text-center">
