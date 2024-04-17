@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from books.models import RecomBooks
+from django.contrib.auth.models import User
 
+#모델에 대한 시리얼라이저
 class RecomBooksSerializer(serializers.Serializer):
     #필드 정의
     id = serializers.IntegerField(read_only = True)
@@ -20,14 +22,12 @@ class RecomBooksSerializer(serializers.Serializer):
         instance.title = validated_data.get('title', instance.title)
         instance.author = validated_data.get('author', instance.author)
         instance.recomment = validated_data.get('recomment', instance.recomment)
-        #instance.isbn = validated_data.get('isbn', instance.isbn)
-        #instance.publisher = validated_data.get('publisher', instance.publisher)
         instance.recomno = validated_data.get('recomno', instance.recomno)
         instance.drcode = validated_data.get('drcode', instance.drcode)
         instance.save()
         return instance
 
-
+#키워드 시리얼라이저 별도
 class KeywordSerializer(serializers.ModelSerializer):
     class Meta:
         model= RecomBooks
@@ -37,3 +37,12 @@ class KeywordSerializer(serializers.ModelSerializer):
         if instance:
             return instance.keyword
         return None
+    
+"""
+class UserSerializer(serializers.ModelSerializer):
+    books = serializers.PrimaryKeyRelatedField(many=True, queryset=RecomBooks.objects.all())
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'bookmark']
+"""
