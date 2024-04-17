@@ -28,7 +28,7 @@
                         <a class="nav-link {% if request.path == '/webpage/' %} active aria-current='page' {% endif %}" href="{% url 'webpage:index' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/webpage/detail/' %} active aria-current='page' {% endif %}" href="{% url 'webpage:detail' %}">Detail</a>
+                        <a class="nav-link {% if '/webpage/list/' in request.path %} active aria-current='page' {% endif %}" href="{% url 'webpage:list-default' %}">List</a>
                     </li>
                 </ul>
                 <div class="float-end me-3">

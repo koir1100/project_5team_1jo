@@ -1,72 +1,27 @@
 {% extends 'webpage/base.html' %}
-{% block title %}Search page{% endblock %}
+{% block title %}Book list{% endblock %}
 {% block content %}
 <style>
-	.card {
-		padding: 10px;
-	}
-	.card h3 {
-		font-family: none;
-	}
+h4, h5 {
+	margin: 1rem 0;
+}
 </style>
-<h2>검색 결과</h2>
-<form class="row row-cols-auto justify-content-center">
-	<div class="col-4">
-		<input class="form-control" type="text" placeholder="찾고자 하는 키워드를 입력하세요" />
-	</div>
-
-	<div class="col-1">
-		<button type="submit" class="btn btn-secondary">검색</button>
-	</div>
-</form>
+<h2>세부 내용</h2>
 <hr />
 
-<div class="d-block">
-	<table id="book-table" class="table table-bordered border-dark table-hover">
-		<thead>
-			<tr>
-				<th scope="col">순서</th>
-				<th scope="col">책 제목</th>
-				<th scope="col">지은이</th>
-				<th scope="col">추천 키워드</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for row in result %}
-			<tr role="button" data-href="https://www.nl.go.kr/NL/contents/N20500000000.do?schM=view&recomNo={{row.recomNo}}">
-				<th class="text-center" scope="row">{{ row.id }}</th>
-				<td>{{ row.title }}</td>
-				<td>{{ row.author }}</td>
-				<td>{{ row.keywords|join:", " }}</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	<hr/>
-
-	<div>
-		<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-				<li class="page-item disabled">
-					<a class="page-link">Previous</a>
-				</li>
-				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item">
-					<a class="page-link" href="#">Next</a>
-				</li>
-			</ul>
-		</nav>
-	</div>
+<div class="d-block card text-bg-light justify-content-center">
+	<div class="card-header"><h4>책 제목: {{ recomTitle }}</h4></div>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item"><h5>지은이: {{ recomAuthor }}</h5></li>
+		<li class="list-group-item" style="min-height: 30rem;"><strong>사서 추천 글</strong><br/><br/>{{ recomContens|join:"<br/>" }}</li>
+		<li class="list-group-item text-end">추천 키워드: {{ keywords }}</li>
+		<li class="list-group-item text-center">
+			<a class="btn btn-secondary" href="https://www.nl.go.kr/NL/contents/N20500000000.do?schM=view&recomNo={{ recomNo }}" target="_blank">
+				상세 내용 바로가기
+			</a>
+		</li>
+	</ul>
 </div>
 {% endblock %}
 {% block script %}
-	<script>
-		$( document ).ready(function() {
-			$("#book-table").on("click", "tr[role=\"button\"]", function (e) {
-				window.open($(this).data("href"), '_blank');
-			});
-		});
-	</script>
 {% endblock %}

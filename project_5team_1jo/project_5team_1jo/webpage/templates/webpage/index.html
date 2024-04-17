@@ -1,24 +1,16 @@
 {% extends 'webpage/base.html' %}
 {% block content %}
-<style>
-	.card {
-		padding: 10px;
-	}
-	.card h3 {
-		font-family: none;
-	}
-</style>
 <h2>국립중앙도서관 사서추천도서 검색기</h2>
 <hr />
 
 <h3>카테고리별 목록</h3>
 <div class="row">
 	<ul class="nav col justify-content-center">
-		<li class="nav-item"><a class="nav-link" href="#">전체</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">문학</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">인문사회</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">사회과학</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">자연과학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list' page=1 %}">전체</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-type' type='li' page=1 %}">문학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-type' type='hs' page=1 %}">인문사회</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-type' type='ss' page=1 %}">사회과학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-type' type='ns' page=1 %}">자연과학</a></li>
 	</ul>
 </div>
 <hr />

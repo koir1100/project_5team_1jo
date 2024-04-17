@@ -6,6 +6,10 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 
 from .forms import CustomUserCreationForm
+import requests
+
+import textwrap
+from itertools import chain
 
 # Create your views here.
 
@@ -27,40 +31,52 @@ def home(request):
     return render(request, 'webpage/home.html', context)
 
 @login_required(login_url='/webpage/signin')
-def detail(request):
+def list(request, page=1, type=None):
+    result = ""
+    if type is not None:
+        result = requests.get('http://127.0.0.1:8000/api/list/{}/{}'.format(type, page)).json()
+    else:
+        result = requests.get('http://127.0.0.1:8000/api/list/{}'.format(page)).json()
+    
+    category = ""
+    if type == "li":
+        category = "문학 분야"
+    elif type == "hs":
+        category = "인문과학 분야"
+    elif type == "ss":
+        category = "사회과학 분야"
+    elif type == "ns":
+        category = "자연과학 분야"
+    else:
+        category = "전 분야"
+
     context = {
-        "title": "Detail Page",
-        "result": 
-            [
-                {
-                    "id": "4",
-                    "title": "좋은 엄마 학교",
-                    "author": "제서민 챈 지음; 정해영 옮김",
-                    "keywords": ["가족", "학교", "친구"],
-                    "recomNo": "20240401105251155100",
-                },
-                {
-                    "id": "3",
-                    "title": "출근하는 책들 : 읽는 삶은 일하는 삶을 어떻게 구하나",
-                    "author": "지은이: 구채은",
-                    "keywords": ["업무", "일터", "인간관계"],
-                    "recomNo":"20240328103044369100",
-                },
-                {
-                    "id": "2",
-                    "title": "과학에서 인문학을 만나다 : 챗GPT의 시대 인문학에서 답을 찾다",
-                    "author": "김유항,황진명 지음",
-                    "keywords": ["인공지능", "챗GPT", "과학자"],
-                    "recomNo":"20240328105133076100",
-                },
-                {
-                    "id": "1",
-                    "title": "수상한 단어들의 지도 : 꼬리에 꼬리를 무는 어원의 지적 여정",
-                    "author": "데버라 워런 지음 ;홍한결 옮김",
-                    "keywords": ["여행", "어원", "사연"],
-                    "recomNo":"20240130133025518100",
-                },
-            ]
+        "title": "Book List",
+        "category": category,
+        "result": result,
+        "page": page,
+    }
+
+    return render(request, 'webpage/list.html', context)
+
+@login_required(login_url='/webpage/signin')
+def detail(request, id=6):
+    wrapper = textwrap.TextWrapper(width=600, replace_whitespace=False)
+    temp = """‘인간이 상상하지 못한 혁신과 발전을 이끌어 낼 수 있는 도구’
+
+이 책은 인공지능에 관한 기술적 설명보다는 인공지능이 의료, 금융 등 다양한 산업 분야에서 어떤 역할을 하게 되는지 또 인공지능으로 인해 사라질 직업과 새로이 나타날 직업 등 인공지능이 미래에 우리 삶에 끼칠 영향들을 다루고 있다. 그리고 급변하는 시대에 대한민국 및 세계 각국에서는 인공지능에 어떻게 대비하고 있는지 비전문가도 쉽게 이해할 수 있게 내용을 풀어 설명하고 있다.
+
+하지만 인공지능 기술을 터득하고 체화하는 데 걸리는 시간보다 인공지능 기술이 발전하는 속도가 너무 빠르다 보니 인공지능을 잘 활용하지 못하고 인공지능에 두려움을 갖는 사람들이 있는 것도 사실이다. 이 책을 읽고 마음속에 있던 벽을 허물어 인공지능에 한 걸음 더 가까이 다가가 보는 건 어떨까? 변화하는 시대에 같이 발맞추어 가기 위해서 말이다."""
+    
+    contents = [wrapper.wrap(i) for i in temp.split('\n') if i != '']
+    contents = chain.from_iterable(contents)
+
+    context = {
+        "recomTitle": "2024 AI 트렌드 : 한발 더 빠르게, 누구보다 깊이 있게 AI로 송두리째 바뀔 세상을 포착하다",
+        "recomAuthor": "딥앤와이랩스,류성일,이규남,황동건,이영표,조현서,박준상,홍준의 지음",
+        "recomContens": contents,
+        "recomNo": "20240130152736808100",
+        "keywords": "인공지능, 변화, 기술",
     }
 
     return render(request, 'webpage/detail.html', context)
