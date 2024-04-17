@@ -28,13 +28,14 @@ BookDetails: 제목, 작가, ISBN, 자료내용(코멘트), 추천번호, 분류
 """
 
 class RecomBooks(models.Model):
-    title = models.CharField(max_length=50) #추천도서 제목
-    author = models.CharField(max_length=20) #도서 작가
+    title = models.CharField(max_length=200) #추천도서 제목
+    author = models.CharField(max_length=100) #도서 작가
     recomment = models.CharField(max_length=2000, default="없음") #자료내용(코멘트)
     isbn = models.CharField(max_length=13, default="9700000000000") #ISBN
-    publisher = models.CharField(max_length=8, default="알수없음") #출판사
+    #publisher = models.CharField(max_length=8, default="알수없음") #출판사
     recomno = models.CharField(max_length=20, default="0000") #20자리의 번호 코드는 IntegerField의 범위를 넘음, 문자열 형태로 받아야 함
-    drcode = models.PositiveSmallIntegerField(default=0) #분류 번호
+    drcode = models.IntegerField(default=0) #분류 번호
+    keyword = models.CharField(max_length=50, default="")
     #bookmark = models.BooleanField(default=False) #북마크 여부
 
     def __str__(self):

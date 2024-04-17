@@ -1,5 +1,5 @@
 from books.models import RecomBooks
-from books_api.serializers import RecomBooksSerializer
+from books_api.serializer import RecomBooksSerializer
 from rest_framework.renderers import JSONRenderer
 import json
 
