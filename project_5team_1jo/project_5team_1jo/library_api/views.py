@@ -77,7 +77,7 @@ def list_books(request, page, type=None):
 
     filter_data = real_json_data['channel']['list']
     new_data = list()
-    attri_list = ['drCode', 'recomNo', 'recomauthor', 'recomtitle', 'recomcontens', 'recomisbn']
+    attri_list = ['drCode', 'recomNo', 'recomauthor', 'recomtitle', 'recomcontens']
 
     if isinstance(filter_data, dict):
         values = list(filter_data.values())[0]

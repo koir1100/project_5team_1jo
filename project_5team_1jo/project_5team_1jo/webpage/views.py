@@ -72,11 +72,11 @@ def detail(request, id=6):
     contents = chain.from_iterable(contents)
 
     context = {
-        "recomTitle": "2024 AI 트렌드 : 한발 더 빠르게, 누구보다 깊이 있게 AI로 송두리째 바뀔 세상을 포착하다",
-        "recomAuthor": "딥앤와이랩스,류성일,이규남,황동건,이영표,조현서,박준상,홍준의 지음",
-        "recomContens": contents,
-        "recomNo": "20240130152736808100",
-        "keywords": "인공지능, 변화, 기술",
+        "title": "2024 AI 트렌드 : 한발 더 빠르게, 누구보다 깊이 있게 AI로 송두리째 바뀔 세상을 포착하다",
+        "author": "딥앤와이랩스,류성일,이규남,황동건,이영표,조현서,박준상,홍준의 지음",
+        "recomment": contents,
+        "recomno": "20240130152736808100",
+        "keyword": "인공지능, 변화, 기술",
     }
 
     return render(request, 'webpage/detail.html', context)
