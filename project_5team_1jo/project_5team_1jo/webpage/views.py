@@ -84,7 +84,7 @@ def detail(request, id=1):
         "author": result['author'],
         "recomment": contents,
         "recomno": result['recomno'],
-        "keyword": json.loads(result['keyword'].replace("'","\""))[:4],
+        "keyword": json.loads(result['keyword'].replace("'","\""))[:3],
     }
 
     return render(request, 'webpage/detail.html', context)
