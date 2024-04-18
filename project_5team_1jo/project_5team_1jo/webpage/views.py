@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 
+from books.models import RecomBooks
 from .forms import CustomUserCreationForm
 import requests
 
@@ -64,27 +65,27 @@ def list(request, page=1, type=None):
 
 @login_required(login_url='/webpage/signin')
 def detail(request, id=1):
-    session_id = request.session._get_or_create_session_key()
-    csrf_token = csrf.get_token(request)
+    # session_id = request.session._get_or_create_session_key()
+    # csrf_token = csrf.get_token(request)
 
-    headers = f"{{\"Cookie\":\"sessionid={session_id};csrftoken={csrf_token}\",\"X-CSRFToken\":\"{csrf_token}\"}}"
-    headers = json.loads(headers)
+    # headers = f"{{\"Cookie\":\"sessionid={session_id};csrftoken={csrf_token}\",\"X-CSRFToken\":\"{csrf_token}\"}}"
+    # headers = json.loads(headers)
 
-    result = ""
-    result = requests.get('http://127.0.0.1:8000/rest/books/{}/'.format(id), headers=headers).json()
-
-    wrapper = textwrap.TextWrapper(width=600, replace_whitespace=False)
-    temp = result['recomment']
+    # result = ""
+    # result = requests.get('http://127.0.0.1:8000/rest/books/{}/'.format(id), headers=headers).json()
+    result = RecomBooks.objects.get(pk=id)
+    wrapper = textwrap.TextWrapper(width=2000, replace_whitespace=False)
+    temp = result.recomment
     
-    contents = [wrapper.wrap(i) for i in temp.split('\n') if i != '']
+    contents = [wrapper.wrap(i) for i in temp.split('<br/>') if i != '']
     contents = chain.from_iterable(contents)
 
     context = {
-        "title": result['title'],
-        "author": result['author'],
+        "title": result.title,
+        "author": result.author,
         "recomment": contents,
-        "recomno": result['recomno'],
-        "keyword": json.loads(result['keyword'].replace("'","\""))[:3],
+        "recomno": result.recomno,
+        "keyword": json.loads(result.keyword.replace("'","\""))[:3],
     }
 
     return render(request, 'webpage/detail.html', context)

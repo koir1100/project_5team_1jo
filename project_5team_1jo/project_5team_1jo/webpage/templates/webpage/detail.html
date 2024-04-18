@@ -13,7 +13,7 @@ h4, h5 {
 	<div class="card-header"><h4>책 제목: {{ title }}</h4></div>
 	<ul class="list-group list-group-flush">
 		<li class="list-group-item"><h5>지은이: {{ author }}</h5></li>
-		<li class="list-group-item" style="min-height: 30rem;"><strong>사서 추천 글</strong><br/><br/>{{ recomment|join:"<br/><br/>" }}</li>
+		<li class="list-group-item" style="white-space: pre-wrap; min-height: 25rem;"><strong>사서 추천 글</strong><br/><br/>{{ recomment|join:"<br/></br/>" }}</li>
 		<li class="list-group-item text-end fw-bold">추천 키워드: {{ keyword|join:", " }}</li>
 		<li class="list-group-item text-center">
 			<a class="btn btn-secondary" href="https://www.nl.go.kr/NL/contents/N20500000000.do?schM=view&recomNo={{ recomno }}" target="_blank">
