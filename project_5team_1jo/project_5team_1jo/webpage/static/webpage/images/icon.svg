@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 80 80"
+   id="svg7005"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="Wlm-icon-register-green.svg">
+  <metadata
+     id="metadata7025">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>wlm-icon-register-dark-navy</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7023" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1344"
+     inkscape:window-height="777"
+     id="namedview7021"
+     showgrid="false"
+     inkscape:zoom="2.95"
+     inkscape:cx="40"
+     inkscape:cy="40"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7005" />
+  <title
+     id="title7007">wlm-icon-register-dark-navy</title>
+  <path
+     d="M31.49,45.48c-13.13,1.43-17.28,6.73-17.28,13.05v7"
+     fill="none"
+     stroke="#1d1d1b"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="3"
+     id="path7009"
+     style="stroke:#02075d;stroke-opacity:1" />
+  <path
+     d="M63.22,65.48v-7c0-6.32-3.5-11.61-16.42-13.05"
+     fill="none"
+     stroke="#1d1d1b"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="3"
+     id="path7011"
+     style="stroke:#02075d;stroke-opacity:1" />
+  <path
+     d="M46.64,43c.11,1.12.16,2.31.16,3.58,0,2.42-4.55,8.92-7.65,8.92-2.91,0-7.66-6.5-7.66-8.92a37.84,37.84,0,0,1,.19-3.82"
+     fill="none"
+     stroke="#1d1d1b"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="3"
+     id="path7013"
+     style="stroke:#02075d;stroke-opacity:1" />
+  <path
+     d="M52.33,31.68c0,7.28-7.76,15-13.18,15C34.42,46.64,26,39,26,31.68s.2-16.74,13.18-16.74C52.33,14.94,52.33,24.4,52.33,31.68Z"
+     fill="none"
+     stroke="#1d1d1b"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="3"
+     id="path7015"
+     style="stroke:#02075d;stroke-opacity:1" />
+</svg>

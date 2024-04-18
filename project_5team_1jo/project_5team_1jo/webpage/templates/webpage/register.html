@@ -1,0 +1,55 @@
+{% extends 'webpage/base.html' %}
+{% load static %}
+{% block content %}
+<div class="auth">
+    <div class="auth__header text-center row mt-5">
+        <div class="col-12 text-center">
+            <img src="{% static 'webpage/images/icon.svg' %}" width="15%" alt="icon">
+            <h2>회원가입</h2>
+        </div>
+        <p>Create a new account</p>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            {{error}}
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-12">
+            <form action="{% url 'webpage:register' %}" method="POST" class="form auth__form ms-auto me-auto col-6">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="form__field form-group">
+                    {% if field.label == 'Username' %}
+                        <label for="formInput#text" class="form-label">ID</label>
+                    {% else %}
+                        <label for="formInput#text" class="form-label">{{field.label}}</label>
+                    {% endif %}
+                    {{field}}
+                </div>
+                {% endfor %}
+                {% for message in messages %}
+                    {% if forloop.first %}
+                    <br/>
+                    {% endif %}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                <br/>
+                <div class="auth__actions text-center">
+                    <button class="btn btn-primary" type="submit">Sign Up</button>
+                </div>
+            </form>
+            
+            <div class="auth__alternative text-end">
+                <p class="d-inline">Already have an Account?</p>&nbsp;&nbsp;
+                <a href="{% url 'webpage:signin' %}" role="button" class="btn btn-primary">Sign In</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

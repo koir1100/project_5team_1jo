@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'webpage/css/bootstrap.min.css' %}">
+    <style>
+        .wrap_content {
+            margin-top: 20px;
+        }
+        body {
+            margin: 0px;
+            background-color: #F0EDCC;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/webpage/">My Webpage app</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/webpage/' %} active aria-current='page' {% endif %}" href="{% url 'webpage:index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if '/webpage/list/' in request.path %} active aria-current='page' {% endif %}" href="{% url 'webpage:list-default' %}">List</a>
+                    </li>
+                </ul>
+                <div class="float-end me-3">
+                    {% if request.user.is_authenticated %}
+                    <a onclick="logout_popup(event)" href="{% url 'webpage:signout' %}" class="btn btn-outline-light">{{ request.user.get_username }}, Hello!</a>
+                    {% else %}
+                    <a href="{% url 'webpage:signin' %}" class="btn btn-outline-light">Sign in</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="wrap_content">
+        <div id="content" name="content" class="container">
+        {% block content %}
+        {% endblock %}
+        </div>
+    </div>
+    <script src="{% static 'webpage/js/bootstrap.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        function logout_popup(e) {
+            if (confirm("로그아웃 하시겠습니까?")) {
+                window.location.reload()
+            } else {
+                e.preventDefault()
+            }
+        }
+    </script>
+    {% block script %}
+    {% endblock %}
+</body>
+</html>
