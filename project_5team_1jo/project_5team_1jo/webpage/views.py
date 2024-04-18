@@ -35,30 +35,10 @@ def home(request):
     return render(request, 'webpage/home.html', context)
 
 @login_required(login_url='/webpage/signin')
-def list(request, page=1, type=None):
-    result = ""
-    if type is not None:
-        result = requests.get('http://127.0.0.1:8000/api/list/{}/{}'.format(type, page)).json()
-    else:
-        result = requests.get('http://127.0.0.1:8000/api/list/{}'.format(page)).json()
-    
-    category = ""
-    if type == "li":
-        category = "문학 분야"
-    elif type == "hs":
-        category = "인문과학 분야"
-    elif type == "ss":
-        category = "사회과학 분야"
-    elif type == "ns":
-        category = "자연과학 분야"
-    else:
-        category = "전 분야"
-
+def list(request, drcode=0):    
     context = {
         "title": "Book List",
-        "category": category,
-        "result": result,
-        "page": page,
+        "drcode": drcode,
     }
 
     return render(request, 'webpage/list.html', context)

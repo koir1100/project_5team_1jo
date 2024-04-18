@@ -9,7 +9,7 @@
 </style>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.4/css/dataTables.bootstrap5.css" />
-<h2>{{ category }} 검색 결과</h2>
+<h2>{% replace_category_name drcode %} 검색 결과</h2>
 <form class="row row-cols-auto justify-content-center">
 	<div class="col-4">
 		<input class="form-control" type="text" placeholder="찾고자 하는 키워드를 입력하세요" />
@@ -45,12 +45,15 @@
 				window.open($(this).data("href"), '_blank');
 			});
 
+			var drcode = {{ drcode }}
 			var table = $("#book-table").DataTable({
 				"dom": 'rt<"d-flex justify-content-center mt-2"p><"mb-5">',
+				{% comment %} "pageLength": 10, {% endcomment %}
 				"serverSide": true,
 				"processing": true,
 				"ajax": {
-					"url": "/rest/books/?format=datatables",
+					{% if drcode != 0 %}"url": "/rest/books/specific/" + drcode + "?format=datatables",
+					{% else %}"url": "/rest/books/?format=datatables",{% endif %}
 					"datatype": "json",
 				},
 				"columns": [
@@ -95,6 +98,8 @@
 					});
 					$(row).css('cursor', 'pointer');
 				},
+				"pageLength": 10,
+				"lengthChange": false,
 			});
 		});
 	</script>
