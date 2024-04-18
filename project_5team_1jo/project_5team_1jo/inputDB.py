@@ -33,7 +33,8 @@ for i, v in enumerate(soup.find_all("item")):
     input_list[i].append(int(v.drcode.text))
 
     for k in Counter(nouns).most_common():
-        sorted_nouns.append(k[0])
+        if len(k[0]) > 1:
+            sorted_nouns.append(k[0])
 
     input_list[i].append(str(sorted_nouns))
     input_list[i] = tuple(input_list[i])
