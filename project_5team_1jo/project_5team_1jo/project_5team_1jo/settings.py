@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'books.apps.BooksConfig',
     'webpage.apps.WebpageConfig',
     'webpage.templatetags.webpage_extra',
-    'library_api.apps.LibraryApiConfig',
     'rest_framework',
 ]
 
