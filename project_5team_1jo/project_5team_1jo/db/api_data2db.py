@@ -3,7 +3,6 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'db.settings')
 django.setup()
 
-from books_api import serializer
 from books_api.serializer import RecomBooksSerializer
 
 def data2db(data):

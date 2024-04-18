@@ -32,12 +32,17 @@ class KeywordSerializer(serializers.ModelSerializer):
     class Meta:
         model= RecomBooks
         fields=['keyword']
+
+    #시리얼라이저 적용 후 dict에 대한 ['keyword']와 동일함
+    """
     def get_keyword(self):
         instance = self.instance
         if instance:
             return instance.keyword
         return None
-    
+    """
+
+
 """
 class UserSerializer(serializers.ModelSerializer):
     books = serializers.PrimaryKeyRelatedField(many=True, queryset=RecomBooks.objects.all())

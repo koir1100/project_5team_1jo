@@ -8,8 +8,7 @@ django.setup()
 from books_api import serializer
 from books_api.serializer import RecomBooksSerializer
 
-#인증 키: d4e7415a231c75a620dd4615a4508a1902692938b60cb4c8b30eb6c8a07a3bc1
-rest = requests.get("https://nl.go.kr/NL/search/openApi/saseoApi.do?key=d4e7415a231c75a620dd4615a4508a1902692938b60cb4c8b30eb6c8a07a3bc1&startRowNumApi=1&endRowNumApi=10&start_date=20110315&end_date=20240415")
+rest = requests.get("https://nl.go.kr/NL/search/openApi/saseoApi.do?key=d4e7415a231c75a620dd4615a4508a1902692938b60cb4c8b30eb6c8a07a3bc1&startRowNumApi=1&endRowNumApi=9999&start_date=20110315&end_date=20240415")
 
 """
 요청 변수(request parameter)
@@ -49,9 +48,10 @@ for i in range(len(bookname)):
     }
     data.append(data_dict)
 
-print(len(data))
-
-"""for i in range(len(data)):
+#print(len(data))
+#print(data)
+"""
+for i in range(len(data)):
     serializer = RecomBooksSerializer(data=data[i])
     if serializer.is_valid():
         serializer.save()
@@ -66,4 +66,9 @@ sample = {
     'recomno': '20240401115529297100', 
     'drcode': '5',
     }
+"""
+
+"""
+1. 임의 유저가 조작할 수 없도록 제한하기
+2. 유저에 대한 설정에 북마크 여부를 둘 것인지
 """
