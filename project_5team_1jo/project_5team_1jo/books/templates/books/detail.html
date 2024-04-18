@@ -1,0 +1,9 @@
+<h1>{{recombook.title}}</h1>
+<ul>
+    {% for bookdetail in recombook.bookdetails_set.all %}
+        <li>{{bookdetail.publisher}}</li>
+        <li>{{bookdetail.drcode}}</li>
+        <li>{{bookdetail.recomno}}</li>
+        <li>{{bookdetail.recomment}}</li>
+    {% endfor %}
+</ul>

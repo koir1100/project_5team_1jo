@@ -1,0 +1,12 @@
+{% if books %}
+<ul>
+    {% for book in books %}
+        <li>{{book.title}}</li>
+        <li>{{book.author}}</li>
+        <li>{{book.recomment}}</li>
+        <li>{{book.drcode}}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>no books</p>
+{% endif %}

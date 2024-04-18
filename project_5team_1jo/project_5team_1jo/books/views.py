@@ -5,7 +5,7 @@ from .models import *
 def index(request):
     book_list = RecomBooks.objects.order_by('-recomno')[:10]
     context = {'books': book_list}
-    return render(request, 'books/index.html')
+    return render(request, 'books/index.html', context)
     #output = ', '.join(b.title for b in book_list)
     #return HttpResponse(output)
 
