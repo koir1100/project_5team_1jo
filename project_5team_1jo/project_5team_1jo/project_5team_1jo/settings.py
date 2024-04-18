@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'scrap',
+    'books.apps.BooksConfig',
     'webpage.apps.WebpageConfig',
     'webpage.templatetags.webpage_extra',
     'library_api.apps.LibraryApiConfig',
