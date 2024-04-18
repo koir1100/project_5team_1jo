@@ -1,5 +1,6 @@
 from books.models import RecomBooks
 from books_api.serializer import RecomBooksSerializer
+from books_api.serializer import RecomBooksDetailSerializer
 from rest_framework import generics, permissions
 #from . import permissions as api_permissions
 
@@ -9,8 +10,8 @@ class BookList(generics.ListCreateAPIView):
     serializer_class = RecomBooksSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-#PUT(갱신), DELETE(삭제)
-class BookDetail(generics.RetrieveUpdateDestroyAPIView):
+#GET(로드)
+class BookDetail(generics.RetrieveAPIView):
     queryset = RecomBooks.objects.all()
-    serializer_class = RecomBooksSerializer
+    serializer_class = RecomBooksDetailSerializer
     permission_classes = [permissions.IsAuthenticated]

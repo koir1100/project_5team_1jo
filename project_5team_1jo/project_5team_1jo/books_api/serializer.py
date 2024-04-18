@@ -41,6 +41,10 @@ class KeywordSerializer(serializers.ModelSerializer):
             return instance.keyword
         return None
 
+class RecomBooksDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecomBooks
+        fields = ['id', 'title', 'author', 'keyword', 'recomment', 'recomno']
 
 """
 class UserSerializer(serializers.ModelSerializer):
