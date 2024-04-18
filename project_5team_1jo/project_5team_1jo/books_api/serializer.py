@@ -34,13 +34,12 @@ class KeywordSerializer(serializers.ModelSerializer):
         fields=['keyword']
 
     #시리얼라이저 적용 후 dict에 대한 ['keyword']와 동일함
-    """
+    
     def get_keyword(self):
         instance = self.instance
         if instance:
             return instance.keyword
         return None
-    """
 
 
 """
