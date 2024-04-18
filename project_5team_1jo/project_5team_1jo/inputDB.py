@@ -45,6 +45,7 @@ conn = sqlite3.connect("./db.sqlite3")
 cur = conn.cursor()
 
 cur.execute("DELETE FROM books_recombooks")
+cur.execute("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'books_recombooks'")
 cur.executemany("INSERT INTO books_recombooks (title, author, recomment, recomno, drcode, keyword) VALUES (?, ?, ?, ?, ?, ?)", input_list)
 conn.commit()
 
