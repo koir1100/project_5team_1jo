@@ -23,7 +23,7 @@ class BookSpecific(generics.ListAPIView):
     pagination_class = RecomBooksListPagination
     serializer_class = RecomBooksListSerializer
     
-    def get_queryset(self): 
+    def get_queryset(self):
         drcode = self.kwargs['code']
         return RecomBooks.objects.filter(drcode=drcode)
 
@@ -33,6 +33,9 @@ class KeywordSearch(generics.ListAPIView):
     serializer_class = RecomBooksListSerializer
 
     def get_queryset(self):
-        keyword = self.kwargs['keyword']
-        return RecomBooks.objects.filter(keyword__contains=keyword)
+        try:
+            keyword = self.kwargs['keyword']
+            return RecomBooks.objects.filter(keyword__contains=keyword)
+        except KeyError:
+            return RecomBooks.objects.none()
     
