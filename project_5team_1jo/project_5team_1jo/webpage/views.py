@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -7,14 +6,12 @@ from django.contrib import messages
 
 from books.models import RecomBooks
 from .forms import CustomUserCreationForm
-import requests
 
 import textwrap
 from itertools import chain
 from books.models import RecomBooks
 
 import json
-from django.middleware import csrf
 
 from .counter import *
 import io
@@ -40,10 +37,24 @@ def home(request):
     return render(request, 'webpage/home.html', context)
 
 @login_required(login_url='/webpage/signin')
-def list(request, drcode=0):    
+def list(request, drcode=0):
     context = {
         "title": "Book List",
         "drcode": drcode,
+        "keyword": None,
+    }
+
+    return render(request, 'webpage/list.html', context)
+
+@login_required(login_url='/webpage/signin')
+def list_search(request, drcode=0, keyword=None):
+    keyword_form = request.GET.get('keyword', None)
+    keyword = keyword if keyword_form is None else keyword_form
+
+    context = {
+        "title": "Book List",
+        "drcode": drcode,
+        "keyword": keyword,
     }
 
     return render(request, 'webpage/list.html', context)
