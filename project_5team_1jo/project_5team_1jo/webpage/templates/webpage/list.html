@@ -10,9 +10,9 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.4/css/dataTables.bootstrap5.css" />
 <h2>{% replace_category_name drcode %} 검색 결과</h2>
-<form class="row row-cols-auto justify-content-center">
+<form class="row row-cols-auto justify-content-center" method="get" action="{% url 'webpage:list-keyword-default' %}">
 	<div class="col-4">
-		<input class="form-control" type="text" placeholder="찾고자 하는 키워드를 입력하세요" />
+		<input class="form-control" type="text" name="keyword" placeholder="찾고자 하는 키워드를 입력하세요" value="{% if keyword %}{{ keyword }}{% endif %}" required />
 	</div>
 
 	<div class="col-1">
@@ -45,14 +45,16 @@
 				window.open($(this).data("href"), '_blank');
 			});
 
+			{% comment %} keyword 변수에 대해 파이썬과 자바스크립트 간 변수 접근 관련해서 시행착오가 있었음. {% endcomment %}
 			var drcode = {{ drcode }}
+			var keyword = "{{ keyword|default_if_none:'null'}}"
 			var table = $("#book-table").DataTable({
-				"dom": 'rt<"d-flex justify-content-center mt-2"p><"mb-5">',
-				{% comment %} "pageLength": 10, {% endcomment %}
+				"dom": 'rt<"d-flex justify-content-center mt-2"p><"mb-4">',
 				"serverSide": true,
 				"processing": true,
 				"ajax": {
 					{% if drcode != 0 %}"url": "/rest/books/specific/" + drcode + "?format=datatables",
+					{% elif keyword %}"url": "/rest/books/search/" + keyword + "?format=datatables",
 					{% else %}"url": "/rest/books/?format=datatables",{% endif %}
 					"datatype": "json",
 				},

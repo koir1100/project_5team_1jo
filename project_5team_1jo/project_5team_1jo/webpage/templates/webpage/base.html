@@ -18,7 +18,7 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/webpage/">My Webpage app</a>
+            <a class="navbar-brand" href="/webpage/">Librarian's Favorite Books</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,6 +29,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if '/webpage/list/' in request.path %} active aria-current='page' {% endif %}" href="{% url 'webpage:list-all' %}">List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if '/webpage/keyword/' in request.path %} active aria-current='page' {% endif %}" href="{% url 'webpage:keyword-all' %}">Keyword</a>
                     </li>
                 </ul>
                 <div class="float-end me-3">

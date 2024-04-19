@@ -6,11 +6,11 @@
 <div class="row">
 	<ul class="nav col justify-content-center">
 		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-all' %}">전체</a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='11'%}">문학</a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='6'%}">인문사회</a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='5'%}">사회과학</a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='4'%}">자연과학</a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='425'%}">테마</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='11' %}">문학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='6' %}">인문사회</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='5' %}">사회과학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='4' %}">자연과학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='425' %}">테마</a></li>
 	</ul>
 </div>
 <hr />
@@ -23,9 +23,9 @@
     <br><h3>{% replace_category_name drcode %} 키워드 TOP 10</h3><br>
     <hr style="width: 638px;"/><br>
     <ol>
-        {% for k in keyword %}
-            <li style="position: relative; font-size: 20px; left: 70px;"><a style="text-decoration: none;" href="/webpage/search/?keyword={{ k }}" >{{ k }}</a></li><br>
-        {% endfor %}
+    {% for k in keyword %}
+        <li style="position: relative; font-size: 20px; left: 70px;"><a style="text-decoration: none;" href="{% url 'webpage:list-keyword' keyword=k %}">{{ k }}</a></li><br>
+    {% endfor %}
     </ol>
 </div>
 {% endblock %}
