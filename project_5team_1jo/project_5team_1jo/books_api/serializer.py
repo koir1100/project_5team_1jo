@@ -54,7 +54,7 @@ class RecomBooksListSerializer(serializers.ModelSerializer):
         datatales_always_serialize = ('id',)
     
     def get_keyword(self, obj):
-        keyword = json.loads(obj.keyword.replace("'","\""))[:3]
+        keyword = json.loads(obj.keyword)[:3]
         return keyword
 
 class RecomBooksDetailSerializer(serializers.ModelSerializer):
