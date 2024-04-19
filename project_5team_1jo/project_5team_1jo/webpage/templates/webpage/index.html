@@ -6,11 +6,12 @@
 <h3>카테고리별 목록</h3>
 <div class="row">
 	<ul class="nav col justify-content-center">
-		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list' page=1 %}">전체</a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-type' type='li' page=1 %}">문학</a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-type' type='hs' page=1 %}">인문사회</a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-type' type='ss' page=1 %}">사회과학</a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-type' type='ns' page=1 %}">자연과학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-all' %}">전체</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-specific' drcode='11'%}">문학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-specific' drcode='6'%}">인문사회</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-specific' drcode='5'%}">사회과학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-specific' drcode='4'%}">자연과학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:list-specific' drcode='425'%}">테마</a></li>
 	</ul>
 </div>
 <hr />

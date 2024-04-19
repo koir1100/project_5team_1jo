@@ -27,5 +27,4 @@ urlpatterns = [
     path('books/', include('books.urls')),
     path('rest/', include('books_api.urls')),
     path('webpage/', include("webpage.urls")),
-    path('api/', include("library_api.urls")),
 ]

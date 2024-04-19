@@ -11,7 +11,7 @@
         }
         body {
             margin: 0px;
-            background-color: #F0EDCC;
+            background-color: #F0EDCC !important;
         }
     </style>
 </head>
@@ -28,7 +28,7 @@
                         <a class="nav-link {% if request.path == '/webpage/' %} active aria-current='page' {% endif %}" href="{% url 'webpage:index' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if '/webpage/list/' in request.path %} active aria-current='page' {% endif %}" href="{% url 'webpage:list-default' %}">List</a>
+                        <a class="nav-link {% if '/webpage/list/' in request.path %} active aria-current='page' {% endif %}" href="{% url 'webpage:list-all' %}">List</a>
                     </li>
                 </ul>
                 <div class="float-end me-3">
