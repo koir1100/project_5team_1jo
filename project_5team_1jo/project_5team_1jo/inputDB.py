@@ -17,6 +17,7 @@ soup = BeautifulSoup(res.text, "lxml")
 hannanum = Hannanum()
 
 input_list = [[] for i in range(int(soup.totalcount.text))]
+except_words = {"저자", "사람", "이야기", "우리", "자신", "소개", "설명", "때문", "무엇", "사람들", "생각"}
 
 for i, v in enumerate(soup.find_all("item")):
     input_list[i].append(v.recomtitle.text)
@@ -33,10 +34,10 @@ for i, v in enumerate(soup.find_all("item")):
     input_list[i].append(int(v.drcode.text))
 
     for k in Counter(nouns).most_common():
-        if len(k[0]) > 1:
+        if len(k[0]) > 1 and not k[0] in except_words:
             sorted_nouns.append(k[0])
 
-    input_list[i].append(str(sorted_nouns))
+    input_list[i].append(str(sorted_nouns).replace("'", "\""))
     input_list[i] = tuple(input_list[i])
 
 input_list = tuple(input_list)

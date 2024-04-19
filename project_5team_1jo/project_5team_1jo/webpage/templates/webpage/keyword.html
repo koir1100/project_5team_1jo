@@ -1,0 +1,31 @@
+{% extends 'webpage/base.html' %}
+{% load webpage_extra %}
+{% block title %}Keyword{% endblock %}
+{% block content %}
+<h3>카테고리별 목록</h3>
+<div class="row">
+	<ul class="nav col justify-content-center">
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-all' %}">전체</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='11'%}">문학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='6'%}">인문사회</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='5'%}">사회과학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='4'%}">자연과학</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'webpage:keyword-specific' drcode='425'%}">테마</a></li>
+	</ul>
+</div>
+<hr />
+<div style="display:inline-block;vertical-align: top;">
+    <br><h3>{% replace_category_name drcode %} 키워드 구름</h3><br>
+    <hr />
+    <br><img src="{{ image }}"/>
+</div>
+<div style="display:inline-block;">
+    <br><h3>{% replace_category_name drcode %} 키워드 TOP 10</h3><br>
+    <hr style="width: 638px;"/><br>
+    <ol>
+        {% for k in keyword %}
+            <li style="position: relative; font-size: 20px; left: 70px;"><a style="text-decoration: none;" href="/webpage/search/?keyword={{ k }}" >{{ k }}</a></li><br>
+        {% endfor %}
+    </ol>
+</div>
+{% endblock %}

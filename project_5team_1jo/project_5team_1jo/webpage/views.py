@@ -16,6 +16,10 @@ from books.models import RecomBooks
 import json
 from django.middleware import csrf
 
+from .counter import *
+import io
+import urllib, base64
+
 # Create your views here.
 
 @login_required(login_url='/webpage/signin')
@@ -70,6 +74,43 @@ def detail(request, id=1):
     }
 
     return render(request, 'webpage/detail.html', context)
+
+@login_required(login_url='/webpage/signin')
+def keyword(request, drcode=0):
+    if drcode == 0:
+        books = RecomBooks.objects.all()
+    else:
+        books = RecomBooks.objects.filter(drcode=drcode)
+
+    keywords = makeCounter(books)
+    commons = makeCommon(keywords)
+    icon = Image.open('activity.png')
+    img = Image.new('RGB', icon.size, (255, 255, 255))
+    img.paste(icon, icon)
+    img = np.array(img)
+
+    wordcloud = WordCloud(font_path="tree.ttf", background_color="white", mask=img, colormap='inferno')
+    wc = wordcloud.generate_from_frequencies(keywords)
+
+    plt.figure(figsize=(6.5,5))
+    plt.axis('off')
+    plt.subplots_adjust(left = 0, bottom = 0, right = 1, top = 1, hspace = 0, wspace = 0)
+    plt.imshow(wc)
+
+    fig = plt.gcf()
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = 'data:image/png;base64,' + urllib.parse.quote(string)
+
+    context = {
+        'image': uri,
+        'keyword': commons,
+        'drcode': drcode
+    }
+
+    return render(request, 'webpage/keyword.html', context)
 
 def login_user(request):
     if request.user.is_authenticated:

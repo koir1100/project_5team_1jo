@@ -13,4 +13,6 @@ urlpatterns = [
     path('signin/', views.login_user, name='signin'),
     path('signout/', views.logout_user, name='signout'),
     path('register/', views.register_user, name='register'),
+    path('keyword/', views.keyword, name="keyword-all"),
+    path('keyword/<int:drcode>/', views.keyword, name="keyword-specific"),
 ]
