@@ -22,10 +22,10 @@ for i, v in enumerate(soup.find_all("item")):
     input_list[i].append(v.recomtitle.text)
     input_list[i].append(v.recomauthor.text)
 
-    recomment = BeautifulSoup(v.recomcontens.text, "html.parser").text.replace("\xa0", " ").replace("\n", "").replace("\r", "")
+    recomment = BeautifulSoup(v.recomcontens.text, "html.parser").text.replace("\xa0", " ").replace("\n", "<br/>")
     retitle = re.sub(r"[^ㄱ-ㅣ가-힣0-9a-zA-Z\s]", "", v.recomtitle.text)
     reconten = re.sub(r"[^ㄱ-ㅣ가-힣0-9a-zA-Z\s]", "", recomment)
-    nouns = hannanum.nouns(retitle) + hannanum.nouns(reconten)
+    nouns = hannanum.nouns(retitle) + hannanum.nouns(reconten.replace("<br/>", " "))
     sorted_nouns = []
     
     input_list[i].append(recomment)

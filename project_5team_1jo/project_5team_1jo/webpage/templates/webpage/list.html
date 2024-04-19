@@ -7,7 +7,9 @@
 		white-space: pre;
 	}
 </style>
-<h2>{{ category }} 검색 결과</h2>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="//cdn.datatables.net/2.0.4/css/dataTables.bootstrap5.css" />
+<h2>{% replace_category_name drcode %} 검색 결과</h2>
 <form class="row row-cols-auto justify-content-center">
 	<div class="col-4">
 		<input class="form-control" type="text" placeholder="찾고자 하는 키워드를 입력하세요" />
@@ -23,48 +25,81 @@
 	<table id="book-table" class="table table-responsive table-striped table-bordered border-dark table-hover align-middle">
 		<thead class="align-middle text-center">
 			<tr>
-				<th scope="col" style="width: 5%;">순서</th>
-				<th scope="col" style="width: 5%;">분야</th>
-				<th class="col-5" scope="col">책 제목</th>
-				<th class="col-4" scope="col">지은이</th>
-				<th class="col-2" scope="col">추천 키워드</th>
+				<th scope="col" style="width: 7%;">순서</th>
+				<th scope="col" style="width: 7%;">분야</th>
+				<th scope="col" style="width: 50%;">책 제목</th>
+				<th scope="col" style="width: 16%;">지은이</th>
+				<th scope="col" style="width: 20%;">추천 키워드</th>
+				<th scope="col" style="display: none;">추천 링크 No</th>
 			</tr>
-		</thead>
-		<tbody>
-			{% for row in result %}
-			<tr role="button" data-href="https://www.nl.go.kr/NL/contents/N20500000000.do?schM=view&recomNo={{row.recomNo}}">
-				<th class="text-center" scope="row">{{ forloop.revcounter }}</th>
-				<td class="text-center line-breaks">{% replace_category_name row.drCode %}</td>
-				<td>{{ row.recomtitle }}</td>
-				<td>{{ row.recomauthor }}</td>
-				<td>{{ row.keyword}}</td>
-			</tr>
-			{% endfor %}
-		</tbody>
+	</thead>
 	</table>
-	<hr/>
-
-	<div>
-		<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-				<li class="page-item disabled">
-					<a class="page-link">Previous</a>
-				</li>
-				<li class="page-item{% if page == 1 %} active{% endif %}"><a class="page-link" href="{% url 'webpage:list' page=1 %}">1</a></li>
-				<li class="page-item{% if page == 2 %} active{% endif %}"><a class="page-link" href="{% url 'webpage:list' page=2 %}">2</a></li>
-				<li class="page-item disabled">
-					<a class="page-link" href="#">Next</a>
-				</li>
-			</ul>
-		</nav>
-	</div>
 </div>
 {% endblock %}
 {% block script %}
+	<script src="//cdn.datatables.net/2.0.4/js/dataTables.js"></script>
+	<script src="//cdn.datatables.net/2.0.4/js/dataTables.bootstrap5.js"></script>
 	<script>
 		$( document ).ready(function() {
 			$("#book-table").on("click", "tr[role=\"button\"]", function (e) {
 				window.open($(this).data("href"), '_blank');
+			});
+
+			var drcode = {{ drcode }}
+			var table = $("#book-table").DataTable({
+				"dom": 'rt<"d-flex justify-content-center mt-2"p><"mb-5">',
+				{% comment %} "pageLength": 10, {% endcomment %}
+				"serverSide": true,
+				"processing": true,
+				"ajax": {
+					{% if drcode != 0 %}"url": "/rest/books/specific/" + drcode + "?format=datatables",
+					{% else %}"url": "/rest/books/?format=datatables",{% endif %}
+					"datatype": "json",
+				},
+				"columns": [
+					{"data": "id", "searchable": false},
+					{
+						"data": "drcode",
+						"searchable": false,
+						"render": function (data, type) {
+							if (data === 4) {
+								data = "자연<br/>과학"
+							} else if (data === 5) {
+								data = "사회<br/>과학"
+							} else if (data === 6) {
+								data = "인문<br/>과학"
+							} else if (data === 11) {
+								data = "문학"
+							} else if (data === 425) {
+								data = "테마"
+							}
+
+							return data;
+						}
+					},
+					{"data": "title", "searchable": false},
+					{"data": "author", "searchable": false},
+					{"data": "keyword", "searchable": false, "orderable": false},
+					{"data": "recomno", "visible": false},
+				],
+				"columnDefs": [
+					{
+						"targets": [0, 1],
+						"className": 'text-center',
+					},
+					{
+						"targets": '_all',
+						"searchable": false,
+					},
+				],
+				"createdRow": function (row, data, dataIndex) {
+					$(row).click(function () {
+						window.open('/webpage/detail/' + data['id'])
+					});
+					$(row).css('cursor', 'pointer');
+				},
+				"pageLength": 10,
+				"lengthChange": false,
 			});
 		});
 	</script>
