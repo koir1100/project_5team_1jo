@@ -50,8 +50,6 @@ cur.execute("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'books_recombooks'"
 cur.executemany("INSERT INTO books_recombooks (title, author, recomment, recomno, drcode, keyword) VALUES (?, ?, ?, ?, ?, ?)", input_list)
 conn.commit()
 
-cur.execute("SELECT keyword FROM books_recombooks")
-print(cur.fetchall())
 cur.execute("SELECT COUNT(*) FROM books_recombooks")
 check = cur.fetchall()
 
