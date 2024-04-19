@@ -1,4 +1,8 @@
+import matplotlib
+# https://stackoverflow.com/a/53434541
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 from PIL import Image
 import numpy as np
 from wordcloud import WordCloud
