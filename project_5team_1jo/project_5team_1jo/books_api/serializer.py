@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from books.models import RecomBooks
 from django.contrib.auth.models import User
+from rest_framework.response import Response
 import json
 
 #모델에 대한 시리얼라이저
@@ -25,6 +26,7 @@ class RecomBooksSerializer(serializers.Serializer):
         instance.recomment = validated_data.get('recomment', instance.recomment)
         instance.recomno = validated_data.get('recomno', instance.recomno)
         instance.drcode = validated_data.get('drcode', instance.drcode)
+        instance.keyword = validated_data.get('keyword', instance.keyword)
         instance.save()
         return instance
 
@@ -35,7 +37,6 @@ class KeywordSerializer(serializers.ModelSerializer):
         fields=['keyword']
 
     #시리얼라이저 적용 후 dict에 대한 ['keyword']와 동일함
-    
     def get_keyword(self):
         instance = self.instance
         if instance:
@@ -51,7 +52,7 @@ class RecomBooksListSerializer(serializers.ModelSerializer):
         model = RecomBooks
         fields = ['id', 'title', 'drcode', 'author', 'keyword', 'recomno']
         datatales_always_serialize = ('id',)
-
+    
     def get_keyword(self, obj):
         keyword = json.loads(obj.keyword.replace("'","\""))[:3]
         return keyword
@@ -60,12 +61,3 @@ class RecomBooksDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecomBooks
         fields = ['id', 'title', 'author', 'keyword', 'recomment', 'recomno']
-
-"""
-class UserSerializer(serializers.ModelSerializer):
-    books = serializers.PrimaryKeyRelatedField(many=True, queryset=RecomBooks.objects.all())
-
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'bookmark']
-"""

@@ -20,6 +20,7 @@ NO  요청변수        형식                설명
 6	drCode	        integer	        분류번호(11:문학, 6:인문과학, 5:사회과학, 4:자연과학)
 """
 
+"""
 soup = BS(rest.text, 'html.parser')
 
 bookname = soup.find_all("recomtitle")
@@ -28,9 +29,10 @@ contents = soup.find_all("recomcontens")
 recom_no = soup.find_all("recomno")
 drcode = soup.find_all("drcode")
 pub = soup.find_all("recompublisher")
+"""
 
 data = []
-
+"""
 for i in range(len(bookname)):
     contentsoup = BS(contents[i].text).text
 
@@ -45,11 +47,13 @@ for i in range(len(bookname)):
         "recomno":recom_no[i].text,
         "drcode":drcode[i].text
     }
-    data.append(data_dict)
+    data.append(data_dict)"""
 
-data2db(data)
+#data2db(data)
 
 """
 1. 임의 유저가 조작할 수 없도록 제한하기
 2. 유저에 대한 설정에 북마크 여부를 둘 것인지
 """
+
+sample = '[\'a\', \'b\',\'c\']'

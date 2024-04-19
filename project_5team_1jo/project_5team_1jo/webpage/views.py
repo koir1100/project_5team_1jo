@@ -11,6 +11,7 @@ import requests
 
 import textwrap
 from itertools import chain
+from books.models import RecomBooks
 
 import json
 from django.middleware import csrf
@@ -161,3 +162,4 @@ def logout_user(request):
     logout(request)
     messages.success(request, 'Logout Success')
     return redirect('/webpage')
+
