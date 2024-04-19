@@ -26,6 +26,7 @@ class RecomBooksSerializer(serializers.Serializer):
         instance.recomment = validated_data.get('recomment', instance.recomment)
         instance.recomno = validated_data.get('recomno', instance.recomno)
         instance.drcode = validated_data.get('drcode', instance.drcode)
+        instance.keyword = validated_data.get('keyword', instance.keyword)
         instance.save()
         return instance
 
@@ -51,7 +52,7 @@ class RecomBooksListSerializer(serializers.ModelSerializer):
         model = RecomBooks
         fields = ['id', 'title', 'drcode', 'author', 'keyword', 'recomno']
         datatales_always_serialize = ('id',)
-
+    
     def get_keyword(self, obj):
         keyword = json.loads(obj.keyword.replace("'","\""))[:3]
         return keyword

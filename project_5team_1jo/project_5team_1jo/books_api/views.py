@@ -4,7 +4,7 @@ from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 from books_api.serializer import RecomBooksListSerializer, RecomBooksDetailSerializer
 from rest_framework_datatables.pagination import DatatablesLimitOffsetPagination
-#from . import permissions as api_permissions
+from rest_framework.decorators import api_view
 
 #GET(로드)
 class BookList(generics.ListAPIView):
@@ -20,18 +20,19 @@ class BookDetail(generics.RetrieveAPIView):
 
 
 class KeywordSearch(viewsets.ViewSet):
+    serializer_class = RecomBooksListSerializer
     queryset = RecomBooks.objects.all()
-    serializer_class = RecomBooksSerializer
 
     def list(self, request):
         serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data)
 
     def search(self, request):
-        search_term = request.query_params.get('search_term', '')
-        queryset = self.queryset.filter(data_field__icontains=search_term)
+        search_term = request.query_params.get('keyword', None)
+        queryset = self.queryset.filter(keyword__contains=search_term)
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
+
 
 class RecomBooksListPagination(DatatablesLimitOffsetPagination):
     default_limit = 10
