@@ -1,10 +1,7 @@
 from books.models import RecomBooks
-from books_api.serializer import RecomBooksSerializer
-from rest_framework import generics, permissions, viewsets
-from rest_framework.response import Response
+from rest_framework import generics, permissions
 from books_api.serializer import RecomBooksListSerializer, RecomBooksDetailSerializer
 from rest_framework_datatables.pagination import DatatablesLimitOffsetPagination
-from rest_framework.decorators import api_view
 
 #GET(로드)
 class BookList(generics.ListAPIView):
@@ -15,7 +12,7 @@ class BookList(generics.ListAPIView):
 #GET(로드)
 class BookDetail(generics.RetrieveAPIView):
     queryset = RecomBooks.objects.all()
-    serializer_class = RecomBooksSerializer
+    serializer_class = RecomBooksDetailSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
@@ -29,25 +26,11 @@ class KeywordSearch(generics.ListAPIView):
     serializer_class = RecomBooksListSerializer
     #queryset = RecomBooks.objects.all()
 
-    """def list(self, request):
-        serializer = self.serializer_class(self.queryset, many=True)
-        return Response(serializer.data)"""
-
-    """def search(self, request):
-        keyword = self.kwargs['keyword']
-        return RecomBooks.objects.filter(keyword=keyword)
-    """
     def get_queryset(self):
         keyword = self.kwargs['keyword']
         #return RecomBooks.objects.filter(keyword=keyword)
         return RecomBooks.objects.filter(keyword__contains=keyword)
     
-    """
-        search_term = request.query_params.get('keyword', None)
-        queryset = self.queryset.filter(keyword__contains=search_term)
-        serializer = self.serializer_class(queryset, many=True)
-        return Response(serializer.data)
-        """
 
 
 
