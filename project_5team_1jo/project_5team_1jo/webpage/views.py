@@ -10,6 +10,7 @@ import requests
 
 import textwrap
 from itertools import chain
+from books.models import RecomBooks
 
 # Create your views here.
 
@@ -131,3 +132,4 @@ def logout_user(request):
     logout(request)
     messages.success(request, 'Logout Success')
     return redirect('/webpage')
+
