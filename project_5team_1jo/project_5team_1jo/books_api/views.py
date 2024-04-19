@@ -19,23 +19,37 @@ class BookDetail(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class KeywordSearch(viewsets.ViewSet):
+class RecomBooksListPagination(DatatablesLimitOffsetPagination):
+    default_limit = 10
+
+
+class KeywordSearch(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = RecomBooksListPagination
     serializer_class = RecomBooksListSerializer
-    queryset = RecomBooks.objects.all()
+    #queryset = RecomBooks.objects.all()
 
-    def list(self, request):
+    """def list(self, request):
         serializer = self.serializer_class(self.queryset, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data)"""
 
-    def search(self, request):
+    """def search(self, request):
+        keyword = self.kwargs['keyword']
+        return RecomBooks.objects.filter(keyword=keyword)
+    """
+    def get_queryset(self):
+        keyword = self.kwargs['keyword']
+        #return RecomBooks.objects.filter(keyword=keyword)
+        return RecomBooks.objects.filter(keyword__contains=keyword)
+    
+    """
         search_term = request.query_params.get('keyword', None)
         queryset = self.queryset.filter(keyword__contains=search_term)
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
+        """
 
 
-class RecomBooksListPagination(DatatablesLimitOffsetPagination):
-    default_limit = 10
 
 class BookSpecific(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]

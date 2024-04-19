@@ -6,5 +6,5 @@ urlpatterns=[
     path('books/<int:id>/', BookDetail.as_view(), name='book-detail'),
     path('books/<int:pk>/', BookDetail.as_view(), name='book-detail'),
     path('books/specific/<code>', BookSpecific.as_view(), name='book-specific'),
-    path('search/', KeywordSearch.as_view({'get':'search'}), name='search'),
+    path('books/search/<keyword>', KeywordSearch.as_view(), name='book-search'),
 ]
