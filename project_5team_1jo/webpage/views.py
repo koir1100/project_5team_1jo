@@ -112,7 +112,9 @@ def keyword(request, drcode=0):
     buf = io.BytesIO()
     fig.savefig(buf, format='png')
     buf.seek(0)
-    string = base64.b64encode(buf.read())
+
+    # https://matplotlib.org/stable/gallery/user_interfaces/web_application_server_sgskip.html#embedding-in-a-web-application-server-flask
+    string = base64.b64encode(buf.getbuffer()).decode("ascii")
     uri = 'data:image/png;base64,' + urllib.parse.quote(string)
 
     context = {
