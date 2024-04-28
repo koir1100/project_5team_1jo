@@ -39,8 +39,10 @@ class KeywordSearch(generics.ListAPIView):
             keyword = self.kwargs['keyword']
 
             if drcode != 0:
+                # return RecomBooks.objects.filter(drcode=drcode).filter(keyword__icontains=keyword)
                 return RecomBooks.objects.filter(drcode=drcode).filter(Q(keyword__0__icontains=keyword)|Q(keyword__1__icontains=keyword)|Q(keyword__2__icontains=keyword))
             else:
+                # return RecomBooks.objects.filter(keyword__icontains=keyword)
                 return RecomBooks.objects.filter(Q(keyword__0__icontains=keyword)|Q(keyword__1__icontains=keyword)|Q(keyword__2__icontains=keyword))
         except KeyError:
             return RecomBooks.objects.none()
