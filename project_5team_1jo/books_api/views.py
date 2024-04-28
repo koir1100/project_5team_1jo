@@ -35,8 +35,13 @@ class KeywordSearch(generics.ListAPIView):
 
     def get_queryset(self):
         try:
+            drcode = self.kwargs.get('code', 0)
             keyword = self.kwargs['keyword']
-            return RecomBooks.objects.filter(Q(keyword__0__icontains=keyword)|Q(keyword__1__icontains=keyword)|Q(keyword__2__icontains=keyword))
+
+            if drcode != 0:
+                return RecomBooks.objects.filter(drcode=drcode).filter(Q(keyword__0__icontains=keyword)|Q(keyword__1__icontains=keyword)|Q(keyword__2__icontains=keyword))
+            else:
+                return RecomBooks.objects.filter(Q(keyword__0__icontains=keyword)|Q(keyword__1__icontains=keyword)|Q(keyword__2__icontains=keyword))
         except KeyError:
             return RecomBooks.objects.none()
     
