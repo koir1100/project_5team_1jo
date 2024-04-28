@@ -65,11 +65,11 @@
 						"searchable": false,
 						"render": function (data, type) {
 							if (data === 4) {
-								data = "자연<br/>과학"
+								data = "자연과학"
 							} else if (data === 5) {
-								data = "사회<br/>과학"
+								data = "사회과학"
 							} else if (data === 6) {
-								data = "인문<br/>사회"
+								data = "인문사회"
 							} else if (data === 11) {
 								data = "문학"
 							} else if (data === 425) {
@@ -81,7 +81,15 @@
 					},
 					{"data": "title", "searchable": false},
 					{"data": "author", "searchable": false},
-					{"data": "keyword", "searchable": false, "orderable": false},
+					{
+						"data": "keyword", 
+						"render": function (data, type) {
+							concat_data = data[0] + ", " + data[1] + ", " + data[2];
+							return concat_data;
+						},
+						"searchable": false, 
+						"orderable": false,
+					},
 					{"data": "recomno", "visible": false},
 				],
 				"columnDefs": [
