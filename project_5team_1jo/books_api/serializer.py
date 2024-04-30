@@ -2,7 +2,6 @@ from rest_framework import serializers
 from books.models import RecomBooks
 from django.contrib.auth.models import User
 from rest_framework.response import Response
-import json
 
 #모델에 대한 시리얼라이저
 class RecomBooksSerializer(serializers.Serializer):
@@ -54,7 +53,8 @@ class RecomBooksListSerializer(serializers.ModelSerializer):
         datatales_always_serialize = ('id',)
     
     def get_keyword(self, obj):
-        keyword = json.loads(obj.keyword)[:3]
+        dict_keyword = obj.keyword
+        keyword = [dict_keyword[0]["0"], dict_keyword[1]["1"], dict_keyword[2]["2"]]
         return keyword
 
 class RecomBooksDetailSerializer(serializers.ModelSerializer):

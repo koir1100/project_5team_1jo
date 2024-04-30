@@ -12,8 +12,13 @@ from ast import literal_eval
 def makeCounter(books):
     nouns = []
 
-    for i in books:
-        nouns += literal_eval(i.keyword)
+    for book in books:
+        keywords = []
+        for each_keyword in book.keyword[:3]:
+            keyword = list(each_keyword.values())[0]
+            keywords.append(keyword)
+        
+        nouns.extend(keywords)
 
     return Counter(nouns)
 

@@ -1,6 +1,7 @@
 import requests
 import sqlite3
 import re
+import json
 from bs4 import BeautifulSoup
 from datetime import datetime
 from konlpy.tag import Hannanum
@@ -26,21 +27,23 @@ for i, v in enumerate(soup.find_all("item")):
     recomment = BeautifulSoup(v.recomcontens.text, "html.parser").text.replace("\xa0", " ").replace("\n", "<br/>")
     retitle = re.sub(r"[^ㄱ-ㅣ가-힣0-9a-zA-Z\s]", "", v.recomtitle.text)
     reconten = re.sub(r"[^ㄱ-ㅣ가-힣0-9a-zA-Z\s]", "", recomment)
-    nouns = hannanum.nouns(retitle) + hannanum.nouns(reconten.replace("<br/>", " "))
+    nouns = hannanum.nouns(retitle) + hannanum.nouns(reconten.replace("<br/>", " ").replace("br", ""))
     sorted_nouns = []
     
     input_list[i].append(recomment)
     input_list[i].append(v.recomno.text)
     input_list[i].append(int(v.drcode.text))
 
+    j = 0
     for k in Counter(nouns).most_common():
         if len(k[0]) > 1 and not k[0] in except_words:
-            sorted_nouns.append(k[0])
+            sorted_nouns.append({str(j): k[0]})
+            j += 1
 
-    input_list[i].append(str(sorted_nouns).replace("'", "\""))
-    input_list[i] = tuple(input_list[i])
+    input_list[i].append(json.dumps(sorted_nouns, ensure_ascii=False))
+    # input_list[i] = tuple(input_list[i])
 
-input_list = tuple(input_list)
+# input_list = tuple(input_list)
 
 conn = sqlite3.connect("./db.sqlite3")
 cur = conn.cursor()

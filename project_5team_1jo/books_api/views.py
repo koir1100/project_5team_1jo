@@ -2,6 +2,7 @@ from books.models import RecomBooks
 from rest_framework import generics, permissions
 from books_api.serializer import RecomBooksListSerializer, RecomBooksDetailSerializer
 from rest_framework_datatables.pagination import DatatablesLimitOffsetPagination
+from django.db.models import Q
 
 #GET(로드)
 class BookList(generics.ListAPIView):
@@ -34,8 +35,15 @@ class KeywordSearch(generics.ListAPIView):
 
     def get_queryset(self):
         try:
+            drcode = self.kwargs.get('code', 0)
             keyword = self.kwargs['keyword']
-            return RecomBooks.objects.filter(keyword__contains=keyword)
+
+            if drcode != 0:
+                # return RecomBooks.objects.filter(drcode=drcode).filter(keyword__icontains=keyword)
+                return RecomBooks.objects.filter(drcode=drcode).filter(Q(keyword__0__icontains=keyword)|Q(keyword__1__icontains=keyword)|Q(keyword__2__icontains=keyword))
+            else:
+                # return RecomBooks.objects.filter(keyword__icontains=keyword)
+                return RecomBooks.objects.filter(Q(keyword__0__icontains=keyword)|Q(keyword__1__icontains=keyword)|Q(keyword__2__icontains=keyword))
         except KeyError:
             return RecomBooks.objects.none()
     
