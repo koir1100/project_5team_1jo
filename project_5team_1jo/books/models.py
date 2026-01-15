@@ -29,7 +29,7 @@ class RecomBooks(models.Model):
     recomment = models.CharField(max_length=2000, default="없음") #자료내용(코멘트)
     recomno = models.CharField(max_length=20, default="0000") #20자리의 번호 코드는 IntegerField의 범위를 넘음, 문자열 형태로 받아야 함
     drcode = models.IntegerField(default=0) #분류 번호
-    keyword = models.CharField(max_length=2000, default="") #별도로 추출한 키워드 | ",".join()
+    keyword = models.JSONField(max_length=2000, default=list) #별도로 추출한 키워드 | ",".join()
     #bookmark = models.BooleanField(default=False) #북마크 여부
 
     def __str__(self):

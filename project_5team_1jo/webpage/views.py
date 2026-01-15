@@ -11,8 +11,6 @@ import textwrap
 from itertools import chain
 from books.models import RecomBooks
 
-import json
-
 from .counter import *
 import io
 import urllib, base64
@@ -81,7 +79,7 @@ def detail(request, id=1):
         "author": result.author,
         "recomment": contents,
         "recomno": result.recomno,
-        "keyword": json.loads(result.keyword)[:3],
+        "keyword": [result.keyword[0]["0"], result.keyword[1]["1"], result.keyword[2]["2"]],
     }
 
     return render(request, 'webpage/detail.html', context)

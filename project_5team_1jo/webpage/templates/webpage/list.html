@@ -6,11 +6,14 @@
 	.line-breaks {
 		white-space: pre;
 	}
+	.padding-top-zero > * {
+		padding-top: 0 !important;
+	}
 </style>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.4/css/dataTables.bootstrap5.css" />
 <h2>{% replace_category_name drcode %} 검색 결과</h2>
-<form class="row row-cols-auto justify-content-center" method="get" action="{% url 'webpage:list-keyword-default' %}">
+<form class="row row-cols-auto justify-content-center" method="get" action="{% if drcode == 0 %}{% url 'webpage:list-keyword-default' %}{% else %}{% url 'webpage:list-specific-keyword-default' drcode=drcode %}{% endif %}">
 	<div class="col-4">
 		<input class="form-control" type="text" name="keyword" minlength="2" placeholder="찾고자 하는 키워드를 두 글자 이상 입력하세요" value="{% if keyword %}{{ keyword }}{% endif %}" required />
 	</div>
@@ -26,10 +29,10 @@
 		<thead class="align-middle text-center">
 			<tr>
 				<th scope="col" style="width: 7%;">순서</th>
-				<th scope="col" style="width: 7%;">분야</th>
+				<th scope="col" style="width: 9%;">분야</th>
 				<th scope="col" style="width: 50%;">책 제목</th>
 				<th scope="col" style="width: 16%;">지은이</th>
-				<th scope="col" style="width: 20%;">추천 키워드</th>
+				<th scope="col" style="width: 18%;">추천 키워드</th>
 				<th scope="col" style="display: none;">추천 링크 No</th>
 			</tr>
 	</thead>
@@ -49,12 +52,13 @@
 			var drcode = {{ drcode }}
 			var keyword = encodeURIComponent(String.raw`"{{ keyword|default_if_none:'null'}}"`)
 			var table = $("#book-table").DataTable({
-				"dom": 'rt<"d-flex justify-content-center mt-2"p><"mb-4">',
+				"dom": 'rt<"d-flex justify-content-center mt-2 w-100"<"me-auto float-start"><"ms-auto"p><"ms-auto align-self-center padding-top-zero"i>><"mb-4">',
 				"serverSide": true,
 				"processing": true,
 				"ajax": {
-					{% if drcode != 0 %}"url": "/rest/books/specific/" + drcode + "?format=datatables",
-					{% elif keyword %}"url": "/rest/books/search/" + keyword + "?format=datatables",
+					{% if drcode != 0 and not keyword %}"url": "/rest/books/specific/" + drcode + "?format=datatables",
+					{% elif drcode != 0 and keyword %}"url": "/rest/books/search/specific/" + drcode + "/" + keyword + "?format=datatables",
+					{% elif drcode == 0 and keyword %}"url": "/rest/books/search/" + keyword + "?format=datatables",
 					{% else %}"url": "/rest/books/?format=datatables",{% endif %}
 					"datatype": "json",
 				},
@@ -65,11 +69,11 @@
 						"searchable": false,
 						"render": function (data, type) {
 							if (data === 4) {
-								data = "자연<br/>과학"
+								data = "자연과학"
 							} else if (data === 5) {
-								data = "사회<br/>과학"
+								data = "사회과학"
 							} else if (data === 6) {
-								data = "인문<br/>사회"
+								data = "인문사회"
 							} else if (data === 11) {
 								data = "문학"
 							} else if (data === 425) {
@@ -81,7 +85,15 @@
 					},
 					{"data": "title", "searchable": false},
 					{"data": "author", "searchable": false},
-					{"data": "keyword", "searchable": false, "orderable": false},
+					{
+						"data": "keyword", 
+						"render": function (data, type) {
+							concat_data = data[0] + ", " + data[1] + ", " + data[2];
+							return concat_data;
+						},
+						"searchable": false, 
+						"orderable": false,
+					},
 					{"data": "recomno", "visible": false},
 				],
 				"columnDefs": [

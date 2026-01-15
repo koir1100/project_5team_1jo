@@ -24,7 +24,11 @@
     <hr style="width: 638px;"/><br>
     <ol>
     {% for k in keyword %}
+        {% if drcode == 0 %}
         <li style="position: relative; font-size: 20px; left: 70px;"><a style="text-decoration: none;" href="{% url 'webpage:list-keyword' keyword=k %}">{{ k }}</a></li><br>
+        {% else %}
+        <li style="position: relative; font-size: 20px; left: 70px;"><a style="text-decoration: none;" href="{% url 'webpage:list-specific-keyword' drcode=drcode keyword=k %}">{{ k }}</a></li><br>
+        {% endif %}
     {% endfor %}
     </ol>
 </div>
